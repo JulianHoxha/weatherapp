@@ -5,6 +5,13 @@ document.getElementById('searchBtn').addEventListener('click', function() {
     checkWeather(city);
 });
 
+document.getElementById('cityInput').addEventListener("keypress", function(event) {
+    if(event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("searchBtn").click();
+    }
+});
+
 async function checkWeather(city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
@@ -14,7 +21,6 @@ async function checkWeather(city) {
         
         const data = await response.json();
 
-        // Update DOM elements with the correct data
         document.querySelector('.city').innerHTML = data.name;
         document.querySelector('.country').innerHTML = data.sys.country; // Country code
         document.querySelector('.temp').innerHTML = Math.round(data.main.temp) + '°C';
